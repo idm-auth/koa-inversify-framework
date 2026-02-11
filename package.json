@@ -1,6 +1,6 @@
 {
   "name": "@idm-auth/koa-inversify-framework",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "description": "A lightweight framework for building Koa applications with Inversify dependency injection, OpenAPI documentation, and observability",
   "main": "dist/index.js",
