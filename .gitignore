@@ -1,7 +1,7 @@
 .external
 .mongodata
 .dev-user
-core.*
+
 
 # Created by https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudiocode,node
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,linux,macos,visualstudiocode,node
