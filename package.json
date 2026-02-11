@@ -80,7 +80,6 @@
   "homepage": "https://github.com/idm-auth/koa-inversify-framework#readme",
   "devDependencies": {
     "@tsconfig/node24": "^24.0.4",
-    "@types/axios": "^0.14.4",
     "@types/koa": "^3.0.1",
     "@types/koa__cors": "^5.0.1",
     "@types/koa-bodyparser": "^4.3.13",
