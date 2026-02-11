@@ -54,7 +54,7 @@
     "lint:fix": "eslint src --ext .ts --fix",
     "format": "prettier --write \"src/**/*.ts\"",
     "format:check": "prettier --check \"src/**/*.ts\"",
-    "typecheck": "tsc --noEmit",
+    "type-check": "tsc --noEmit",
     "ncu": "ncu -u"
   },
   "repository": {
