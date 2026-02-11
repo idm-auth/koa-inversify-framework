@@ -1,0 +1,34 @@
+# Development files
+.env*
+.dev-user
+.vscode
+.github
+.git
+.gitignore
+
+# Test files
+test/
+coverage/
+*.test.ts
+*.spec.ts
+
+# Build files
+tsconfig.json
+tsconfig.*.json
+.eslintrc*
+.prettierrc*
+
+# Documentation
+*.md
+!README.md
+docs/
+.doc/
+
+# External dependencies
+.external/
+
+# Misc
+.mongodata/
+.DS_Store
+Thumbs.db
+*.log

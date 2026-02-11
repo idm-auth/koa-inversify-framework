@@ -1,0 +1,58 @@
+x-environment: &default-environment
+  ENVIRONMENT_ACTIVE: local
+  MONGO_INITDB_ROOT_USERNAME: root
+  MONGO_INITDB_ROOT_PASSWORD: root_pass
+  MONGO_INITDB_DATABASE: mongoose
+
+services:
+  workspace:
+    image: koa-inversify-framework
+    tty: true
+    hostname: koa-inversify-framework
+    build:
+      context: ..
+      dockerfile: .devcontainer/containers/workspace/Dockerfile
+    environment:
+      <<: *default-environment
+    volumes:
+      - ..:/workspace:consistent
+      - /var/run/docker.sock:/var/run/docker.sock:consistent
+      - ~/.aws:/home/dev-user/.aws:consistent
+      - ../../auth-client-js:/workspace/.external/auth-client-js:consistent
+      - ../../node_modules/koa-inversify-framework/auth-client-js:/workspace/.external/auth-client-js/node_modules:consistent
+      - ../../backend-koa:/workspace/.external/backend-koa:consistent
+    ports:
+      - 3001:3000
+      # - 9090:9090
+    networks:
+      - private-network
+  mongo:
+    image: mongo
+    build:
+      context: ..
+      dockerfile: .devcontainer/containers/monogodb/Dockerfile
+    environment:
+      <<: *default-environment
+    volumes:
+      - ./containers/monogodb/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    tmpfs:
+      - /data/db
+    # ports:
+    #   - 27017:27017
+    networks:
+      - private-network
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - 16687:16686 # Jaeger UI
+      #  - 14269:14268 # Jaeger collector HTTP
+      #  - 4318:4318 # OTLP HTTP collector
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    networks:
+      - private-network
+
+networks:
+  private-network:
+    driver: bridge
