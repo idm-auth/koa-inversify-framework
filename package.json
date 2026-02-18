@@ -56,7 +56,7 @@
     "format:check": "prettier --check \"src/**/*.ts\"",
     "type-check": "tsc --noEmit",
     "ncu": "ncu -u",
-    "patch": "npm version patch "
+    "patch": "npm version patch && git push && git push --tags"
   },
   "repository": {
     "type": "git",
