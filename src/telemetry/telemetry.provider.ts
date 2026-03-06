@@ -2,7 +2,7 @@ import '@/infrastructure/env/dotenv.provider';
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
 import { PrometheusExporter } from '@opentelemetry/exporter-prometheus';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
-import { NodeSDK } from '@opentelemetry/sdk-node';
+import { NodeSDK, NodeSDKConfiguration } from '@opentelemetry/sdk-node';
 import { IncomingMessage } from 'http';
 import { diag, DiagConsoleLogger, DiagLogLevel } from '@opentelemetry/api';
 
@@ -26,7 +26,7 @@ export function createTelemetrySDK(): NodeSDK {
     endpoint: '/metrics',
   });
 
-  const sdk = new NodeSDK({
+  let config: Partial<NodeSDKConfiguration> = {
     serviceName: process.env.APPLICATION_NAME,
     instrumentations: [
       getNodeAutoInstrumentations({
@@ -40,9 +40,17 @@ export function createTelemetrySDK(): NodeSDK {
         },
       }),
     ],
-    traceExporter,
     metricReaders: [prometheusExporter],
-  });
+  }
+
+  if (process.env.OTEL_EXPORTER_ENABLE) {
+    config = {
+      ...config,
+      traceExporter,
+    };
+  }
+
+  const sdk = new NodeSDK(config);
 
   return sdk;
 }
